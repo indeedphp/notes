@@ -1,0 +1,382 @@
+<!doctype html>
+<html lang="ru">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+     <link rel="shortcut icon"href="favicon.ico">
+    <meta name="description" content="Примеры кода">
+    <meta name="keywords" content="Примеры кода">
+    <title>заметки</title>
+  <style>
+   body {
+    background: #303841; /* Цвет фона */
+
+   }
+   a{
+    color: #FFFFFF; /* Цвет текста */
+    }
+      pre{
+    color: #C1C1C1; /* Цвет текста */
+    }
+        details{
+    color: #FFFFFF; /* Цвет текста */
+    }
+  </style>
+</head>
+<body>
+<a href="/index.html">На главную</a>
+<p> Ларавел информация по фреймворку</p>
+
+
+<!-- ================================================================================================================ -->
+<!-- ================================================================================================================ -->
+<!-- ================================================================================================================ -->
+
+    <details>
+    <summary>установка</summary>
+<!-- ВСТАВЛЯЕМ ОТСЮДА -->
+<pre>
+<xmp>
+//////////////////////В КОНСОЛИ
+composer create-project laravel/laravel laravel.local // laravel.local папка ларавеля можно любую создать
+////////////////////
+cd laravel.local  // запуск
+php artisan serve  // запустить ларавел
+//////////////////
+composer require barryvdh/laravel-debugbar --dev  // установка дебаг панели в ларавел
+/////////////Настройка доступа к БД в Laravel/////////config/database php.
+'database' => env('DB_DATABASE', 'test'), //    в подмассиве connections найдите подмассив mysql
+'username' => env('DB_USERNAME', 'root'), // вставить три строки имя базы , юзер и пароль
+'password' => env('DB_PASSWORD', 'root'), // !
+php artisan serve  // после перезапустить в консоли
+/////////////////ПО БАЗЕ ОБЯЗАТЕЛЬНО ПРОПИСАТЬ ФАЙЛ  .env в ларавел
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=test  // название базы
+DB_USERNAME=root  // имя польз
+DB_PASSWORD=root  // пароль
+/////////////////////  В КОНСОЛИ
+php artisan migrate  // создание минимального набора таблиц в базе
+////////////////////
+composer require laravel/ui  // устанавливаем необходимые для регистрации плагины
+/////////////////
+ php artisan ui:auth   // создаем шаблон аутентификации (регистроции)
+////////////////  В РОУТЕ
+Route::get('/', [HomeController::class, 'index']);  //создаем роут на готовый контроллер хоме
+////////////////В КОНТРОЛЛЕРЕ
+namespace App\Http\Controllers;
+use Illuminate\Http\Request;
+class HomeController extends Controller  {
+ public function __construct() {
+        $this->middleware('auth');  }  // если удалить то не регистрированные будут попадать в регистрацию
+  public function index() {
+        return view('home');  } } // открываем блейд хоме
+//////////////////////
+Блейд хоме создается автоматом
+/////////////////  В ПАБЛИК ПАПКА ////Подключаем CSS  стили напрямую , ложим все в папку паблик
+<link rel="stylesheet" href="stule.css">  // можно так
+<link rel="stylesheet" href="{{ asset('stule.css') }}">  // или так
+//////////////////
+<img src="logo.jpg" >  // фотка напрямую из папки паблик
+//////////////////||||||||||||||||||||||||||||
+ php --version  // узнать в консоли версию пхп
+/////////////////////
+composer --version // узнать версию композера
+https://getcomposer.org // узнать версию композера на сайте
+/////////////////
+composer self-update  // обновить композер
+/////////////////
+mysql --version  //проверяем версию базы данных
+/////////////
+node --version  //проверяем есть ли нода -нет устанавливаем
+npm --version  // идет в комплекте с нодой
+https://sitkodenis.ru/install-node-js-in-openserver/   // руководство по установке
+https://nodejs.org/en   // сайт ноды , качаем и устанавливаем тупо на все соглашаясь
+Откройте настройки OpenServer.
+Перейдите на вкладку «Сервер».
+В пункте «Настройка использования переменной Path» выберите из выпадающего списка значение «Свой Path + userdata/config/path.txt + Win Path».
+В директории OpenServer переходим по следующему пути *\userdata\config* и создаем файл path.txt (если он еще не создан). Затем откройте файл path.txt и добавьте в него путь до NodeJs. У меня это «*C:\Program Files\nodejs*«.
+//////////////////
+cd domains   // переходим в папку сервера для установки ларавел
+composer create-project laravel/laravel telesite   // устанавливаем ларавел в папку домайн/телесайт
+cd telesite  // переходим в папку телесайт
+php artisan --version  // проверяем версию ларавел
+/////////////////////
+идем в настройки сервера, домены, ручное управление, пишем название домена любое и выбираем папку паблик в ларавел,
+добавляем и сохраняем
+/////////////////////////////////////////////////////////////////создание в консоли контроллера с круд методами
+php artisan make:controller UsersController --resource --model=User
+/////////////////// вывод всех роутов
+Route::redirect('', 'users');  // можно создать редирект на круд роуты
+Route::resource('users', UsersController::class); // создаем роут обязательно
+php artisan route:list  ///вызываем команду и выходят роуты
+  GET|HEAD        users ................................................................. users.index › UsersController@index
+  POST            users ................................................................. users.store › UsersController@store
+  GET|HEAD        users/create ........................................................ users.create › UsersController@create
+  GET|HEAD        users/{user} ............................................................ users.show › UsersController@show
+  PUT|PATCH       users/{user} ........................................................ users.update › UsersController@update
+  DELETE          users/{user} ...................................................... users.destroy › UsersController@destroy
+  GET|HEAD        users/{user}/edit ....................................................... users.edit › UsersController@edit
+///////////////////////////////////\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\|||||||||||||||||||||||| ларавель 10
+composer create-project laravel/laravel example-app
+composer require laravel/breeze --dev  // загрузка стартового набора унтефикации и пр
+php artisan breeze:install  //  установка
+//vidos
+cd domains\demo // переходим в папку фреймворка, если у вас другая папка с фреймворком то выбирайте ее
+composer require laravel/ui // устанавливаем необходимые для аунтетификации плагины
+php artisan ui:auth // создаем шаблон аутентификации (регистроции)
+getbootstrap.ru/docs/5.3/getting-started/download/ // ссылка на bootstrap
+href="css\bootstrap.min.css" // адрес подключения файл CSS
+src="js\bootstrap.bundle.min.js" // адрес подключения файл JS
+php artisan migrate // создание минимального набора таблиц в базе
+
+</xmp>
+</pre>
+<!-- ВСТАВЛЯЕМ ДО СЮДА -->
+</details>
+
+
+
+<!-- ================================================================================================================ -->
+<!-- ================================================================================================================ -->
+<!-- ================================================================================================================ -->
+
+
+
+<details>
+    <summary>ХРАНЕНИЕ ФАЙЛОВ storage filesystems</summary>
+    <!-- ВСТАВЛЯЕМ ОТСЮДА -->
+<pre>
+<xmp>
+    php artisan storage:link  // создаем ссылку в папке паблик для доступа к фото(настройки ссылки в конфиге внизу)
+
+php artisan storage:unlink  // удаляем ссылку (если не удалятся то ручками удаляем ссылку из паблик)
+
+///////////////////////////
+$path = $request->file('image')->storeAs('public', '544654654');  // сохранить в папку 'public' со своим именем и вернуть путь к файлу
+$image = $request->file('image');  // вытащить файл из реквеста
+$originalname = $image->getClientOriginalName();
+//////////////
+$extension = $request->file('image')->extension();  // вытащить расширение файла
+$originalname = (date('Y-m-d-H-i-s').'.'.$extension);  // время текущее и расширение соеденить
+$path = $image->storeAs('public', $originalname);  // сохраняем файл с именем со временем и расширением
+/////////////////// Сохранить с указанным именем сдатой и долями секунл
+  $image = $request->file('image'); // получаем фото
+       $extension = $image->extension(); //получаем расширение
+       $time=gettimeofday(); // получаем массив время в таимштамп и доли секунд
+       $name = (date('Y-m-d-H-i-s', $time['sec']).'-'.$time['usec'].'.'.$extension);// лепим имя
+       $path = $image->storeAs('public', $name); //сохраняем файл
+       // dd($path);
+       return redirect()->route('show_foto', ['path' => $path]);
+//////////////////////круд
+public function index()
+{
+$files = Storage::files('/public');
+return view('index',compact('files'));
+}
+public function create()
+{
+return view('create');
+}
+public function store(Request $request)
+{
+$image = $request->file('image'); // получаем фото
+$extension = $image->extension(); //получаем расширение
+$name = (date('Y-m-d-H-i-s', time()).'.'.$extension);// лепим имя
+$path = $image->storeAs('public', $name); //сохраняем файл
+dd($path);
+return redirect()->route('show_foto', ['path' => $path]);
+}
+public function show(Request $request)
+{
+$path = $request->get('path');
+return view('show',compact('path'));
+}
+public function edit(Request $request)
+{
+$value = $request->get('path');
+return view('wel',compact('value'));
+}
+public function update(Request $request)
+{
+$path = $request->post('path');
+$image = $request->file('image');
+$fileName = basename($path);
+$path = $image->storeAs('public', $fileName); //сохраняем файл
+}
+public function destroy(Request $request)
+{
+$value = $request->post('path');
+Storage::delete($value);
+return redirect()->route('index_foto');
+}
+//////////////////////////////////////////,блейды
+    <a href="{{route('create_foto')}}">Отправить фотографию на сайт </a>
+</br>
+</br>
+</br>
+    @foreach ($files as $file)
+
+    <img src="https://buctestprom.s3.eu-north-1.amazonaws.com/{{$file}}" width="250" alt="lorem"></br>
+    <a href="{{route('edit_foto', ['path' => $file])}}">Изменить фотографию на сайте </a>
+    </br>
+    </br>
+    @endforeach
+///////////////
+<p> ваше фото сохранено</p>
+<img src="https://buctestprom.s3.eu-north-1.amazonaws.com/{{$path}}" width="250"  alt="lorem">
+<br>
+<a href="{{route('index_foto')}}">вернутся на главную </a>
+<p> можете поменять на другую</p>
+<a href="{{route('edit_foto', ['path' => $path])}}">изменит фотографию на сайте </a>
+/////////////////////////
+    <p> Редактирование фото</p>
+    <img src="https://buctestprom.s3.eu-north-1.amazonaws.com/{{$path}}" width="250" alt="lorem">
+  </br>
+</br>
+<form class="m-5"  action="{{route('update_foto')}}" method="post" enctype="multipart/form-data">
+  @csrf
+  @method ('PUT')
+  <input type="hidden" name="path" value="{{ $path }}">
+  <input type="file" name="image" id="image">
+</br>
+</br>
+<button type="submit" class="btn btn-primary">изменить</button>
+</form>
+</br>
+<form class="m-5"  action="{{route('destroy_foto')}}" method="post" enctype="multipart/form-data">
+  @csrf
+  @method('DELETE')
+  <input type="hidden" name="path" value="{{ $path }}">
+  <button type="submit" class="btn btn-primary">удалить</button>
+</form>
+<br>
+<a href="{{route('index_foto')}}">вернутся на главную </a>
+/////////////////роут
+Route::get('/', [FotoController::class, 'index'])->name('index_foto');
+Route::get('/create', [FotoController::class, 'create'])->name('create_foto');
+Route::post('/create', [FotoController::class, 'store'])->name('store_foto');
+Route::get('/show', [FotoController::class, 'show'])->name('show_foto');
+Route::get('/edit', [FotoController::class, 'edit'])->name('edit_foto');
+Route::put('/edit', [FotoController::class, 'update'])->name('update_foto');
+Route::delete('/edit', [FotoController::class, 'destroy'])->name('destroy_foto');
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+/// настройки для хранилища  S3
+////в config/filesystems.php настраиваем
+'default' => env('FILESYSTEM_DISK', 's3'),
+ 's3' => [
+            'driver' => 's3',
+            'key' => env('AWS_ACCESS_KEY_ID'),
+            'secret' => env('AWS_SECRET_ACCESS_KEY'),
+            'region' => env('AWS_DEFAULT_REGION'),
+            'bucket' => env('AWS_BUCKET'),
+            'url' => env('AWS_URL'),
+            'endpoint' => env('AWS_ENDPOINT'),
+            'use_path_style_endpoint' => env('AWS_USE_PATH_STYLE_ENDPOINT', false),
+            'throw' => false,
+            'visibility' => 'public',  // это надо добавить(файлы загружаются сразу в открытый доступ)
+///////////////////////в файле .env правим
+
+AWS_DEFAULT_REGION=eu-north-1  // регион , если регион другой то меняем на ближайший к зрителю
+AWS_BUCKET=buctestprom  // имя ведра там где хранятся файлы
+AWS_URL=https://buctestprom.s3.eu-north-1.amazonaws.com  // это не обязательно для aws amazon
+AWS_USE_PATH_STYLE_ENDPOINT=true  // незнаю
+////в файле .env тоже
+FILESYSTEM_DISK=s3 // указываем что работаем с s3
+///////////////////////////
+
+////// в Permissions бакета ведра
+/////в Bucket policy вроде не надо, но можно сгенерировать файл
+{
+    "Version": "2012-10-17",
+
+    "Statement": [
+        {
+
+            "Effect": "Allow",
+            "Principal": "*",
+            "Action": "s3:*",
+            "Resource": "arn:aws:s3:::buctestprom"
+        }
+    ]
+}
+//////// в Cross-origin resource sharing (CORS) тоже вроде не надо
+[
+    {
+        "AllowedHeaders":[],
+        "AllowedMethods": [
+            "GET",
+            "PUT",
+            "POST",
+            "DELETE"
+        ],
+        "AllowedOrigins": [
+            "*"
+        ],
+        "ExposeHeaders":[]
+    }
+]
+////////////////////////Описание действий в уже зареганом аккаунте(при регистрации телефон вводил с 8 впереди)
+https://eu-north-1.console.aws.amazon.com/console/home?region=eu-north-1  // вошли на основную страницу аккаунта
+жмем сервисы слева вверху
+S3 Scalable Storage in the Cloud  // ищем Storage и потом с3 и заходим
+Buckets  // слева жмем(может быть уже активно)
+Create bucket  // жмем в середине создать ведро
+Bucket name  // пишем имя ведра оно должно быть уникальное на всем сервере
+Block Public Access settings for this bucket  // снимаем галочки со всех блоков(одной галочкой)
+Create bucket  // жмем создать ведро внизу
+////
+Security credentials  // сверху справа жмем на аккаунт (Test123) и дальше на надпись
+Users  //слева жмем юзерс
+Create user  // дальше по середине создать юзера там пишем имя и получаем коды
+////////////
+
+
+</xmp>
+</pre>
+<!-- ВСТАВЛЯЕМ ДО СЮДА -->
+
+</details>
+
+<!-- ================================================================================================================ -->
+<!-- ================================================================================================================ -->
+<!-- ================================================================================================================ -->
+
+
+
+<!-- <details>
+    <summary>заготовка</summary>
+        ВСТАВЛЯЕМ ОТСЮДА
+<pre>
+<xm
+    ВСТАВЛЯЕМ СЮДА
+</xmp>
+</pre>
+ВСТАВЛЯЕМ ДО СЮДА
+
+</details> -->
+
+
+<!-- ================================================================================================================ -->
+<!-- ================================================================================================================ -->
+<!-- ================================================================================================================ -->
+
+
+
+
+<!-- <details>
+    <summary>заготовка</summary>
+        ВСТАВЛЯЕМ ОТСЮДА
+<pre>
+<xm
+    ВСТАВЛЯЕМ СЮДА
+</xmp>
+</pre>
+ВСТАВЛЯЕМ ДО СЮДА
+
+</details> -->
+
+
+</body>
+</html>
